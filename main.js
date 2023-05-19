@@ -5,6 +5,11 @@ const resetBtn = document.querySelector('.btn-reset');
 const drawActivation = document.querySelector('.box-drawActivation');
     drawActivation.innerText = "Draw";
     drawActivation.style.color = '#38b000'
+const eraserBtn = document.querySelector('.btn-eraser');
+    eraserBtn.addEventListener('click', function() {
+    colorBtn.value = '#f5f5dc'
+    });
+
 let click = true;
 
 grid.addEventListener("click", () => {
@@ -17,17 +22,17 @@ grid.addEventListener("click", () => {
         drawActivation.innerText = "Draw"
         drawActivation.style.color = 'red'
     }
-}) 
+}); 
 
 
 function firstGrid() {
     for (let i = 0; i < 2704; i++) {
-        grid.style.gridTemplateColumns = `repeat(52, 1fr)`
-        grid.style.gridTemplateRows = `repeat(52, 1fr)`
+        grid.style.gridTemplateColumns = `repeat(16, 1fr)`
+        grid.style.gridTemplateRows = `repeat(16, 1fr)`
         const div = document.createElement('div');
         div.classList.add('square');
         let textRange = document.querySelector('.text-range');
-        textRange.innerText = '52' + "X" + '52';
+        textRange.innerText = '16' + "X" + '16';
 
         div.addEventListener('mouseover', function(event){
             if (click) {
