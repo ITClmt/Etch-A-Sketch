@@ -44,6 +44,12 @@ header p {
     margin-right: 15px;
 }
 
+.box-mode p {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
 .btn-reset {
     padding: 8px 25px;
     border: transparent;
@@ -64,7 +70,7 @@ header p {
     transform: translate(0em, 0.2em);
   }
 
-  .btn-eraser {
+  .btn-eraser, .btn-moderainbow, .btn-modenormal {
     padding: 8px 19px;
     border: transparent;
     box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
@@ -75,12 +81,12 @@ header p {
     font-weight: bold;
 }
 
-.btn-eraser:hover {
+.btn-eraser:hover, .btn-moderainbow:hover, .btn-modenormal:hover {
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(30,144,255,1) 0%, rgba(0,212,255,1) 100%);
   }
   
-.btn-eraser:active {
+.btn-eraser:active, .btn-moderainbow:active, .btn-modenormal:active {
     transform: translate(0em, 0.2em);
   }
 
@@ -166,14 +172,13 @@ a:hover {
         gap: 5px;
     }
 
-    .btn-reset {
-        padding: 4px 10px;
+    .box-mode p {
         font-size: 15px;
     }
 
-    .btn-eraser {
-        padding: 4px 10px;
-        font-size: 15px;
+    .btn-reset,.btn-eraser, .btn-moderainbow, .btn-modenormal {
+        padding: 4px 4px;
+        font-size: 12px;
     }
 
     .btn-color {
