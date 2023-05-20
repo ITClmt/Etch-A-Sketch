@@ -112,7 +112,6 @@ resetBtn.addEventListener('click', () => {
 
         //button for Rainbow mode or one color mode !
         normalmodeBtn.addEventListener('click', () => { 
-
             div.addEventListener('mouseover', function(event){
                 if (click) {
                     event.target.style.backgroundColor = `${colorBtn.value}`;
@@ -154,7 +153,7 @@ rangeGrid.addEventListener('input', function createGrid() {
                 event.target.style.backgroundColor = `${colorBtn.value}`;
             }
         });
-        
+
         //button for Rainbow mode or one color mode !
         normalmodeBtn.addEventListener('click', () => { 
 
