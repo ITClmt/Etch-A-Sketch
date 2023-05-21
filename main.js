@@ -1,177 +1,106 @@
-// Button variable
+// Button variables
 const grid = document.querySelector('.container');
 const rangeGrid = document.querySelector('.btn-range');
+let gridSize = 16;
 const colorBtn = document.querySelector('.btn-color');
 const resetBtn = document.querySelector('.btn-reset');
+
 const drawActivation = document.querySelector('.box-drawActivation');
-    drawActivation.innerText = "Draw";
-    drawActivation.style.color = '#38b000'
+drawActivation.innerText = "Draw";
+drawActivation.style.color = '#38b000';
+
 const eraserBtn = document.querySelector('.btn-eraser');
-    eraserBtn.addEventListener('click', function() {
-    colorBtn.value = '#f5f5dc'
-    });
 const rainbowmodeBtn = document.querySelector('.btn-moderainbow');
-const normalmodeBtn = document.querySelector('.btn-modenormal')
+const normalmodeBtn = document.querySelector('.btn-modenormal');
 
-let click = true;
-
-
-// Function for the rainbow button, generate random colors
+// Function for the rainbow button, generates random colors
 function getRandomColor() {
-    let letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+  let letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
   }
+  return color;
+}
 
 // Draw activation
+let click = true;
 grid.addEventListener("click", () => {
-    click = !click;
-    if (click) {
-        drawActivation.innerText = "Draw"
-        drawActivation.style.color = '#38b000'
-    }
-    else {
-        drawActivation.innerText = "Draw"
-        drawActivation.style.color = 'red'
-    }
+  click = !click;
+  if (click) {
+    drawActivation.innerText = "Draw";
+    drawActivation.style.color = '#38b000';
+  } else {
+    drawActivation.innerText = "Draw";
+    drawActivation.style.color = 'red';
+  }
 }); 
 
-//First Grid generation
-function firstGrid() {
-    
-    for (let i = 0; i < 256; i++) {
-        // the first grid is 16 x 16
-        grid.style.gridTemplateColumns = `repeat(16, 1fr)`
-        grid.style.gridTemplateRows = `repeat(16, 1fr)`
-        const div = document.createElement('div');
-        div.classList.add('square');
-        let textRange = document.querySelector('.text-range');
-        textRange.innerText = '16' + "X" + '16';
-
-        //event to draw with a color chosen
-        div.addEventListener('mouseover', function(event){
-            if (click) {
-                event.target.style.backgroundColor = `${colorBtn.value}`;
-            }          
-        });
-
-        //button for Rainbow mode or one color mode !
-        normalmodeBtn.addEventListener('click', () => { 
-
-            div.addEventListener('mouseover', function(event){
-                if (click) {
-                    event.target.style.backgroundColor = `${colorBtn.value}`;
-                }          
-            });
-        });
-
-        rainbowmodeBtn.addEventListener('click', () => { 
-            div.addEventListener('mouseover', function(event){
-                if (click) {
-                    event.target.style.backgroundColor = getRandomColor();
-                }          
-            });
-        });
-        
-        grid.appendChild(div); 
-    }
-}
-firstGrid();
-
-
+// Clears the grid
 function clearGrid() {
-    grid.innerHTML = ''
-  }
+  grid.innerHTML = '';
+}
 
-//Reset Grid button
+// Generates the grid based on the range input value
+function gridGeneration() {
+  gridSize = rangeGrid.value;
+  clearGrid();
+  grid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+  grid.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+
+  // Generates individual squares in the grid
+  for (let i = 0; i < gridSize * gridSize; i++) {
+    const div = document.createElement('div');
+    div.classList.add('square');
+    let textRange = document.querySelector('.text-range');
+    textRange.innerText = gridSize + "X" + gridSize;
+
+    // Event to draw with the chosen color
+    div.addEventListener('mouseover', function(event) {
+      if (click) {
+        event.target.style.backgroundColor = `${colorBtn.value}`;
+      }
+    });
+
+    // Button for normal mode (single color)
+    normalmodeBtn.addEventListener('click', () => { 
+      div.addEventListener('mouseover', function(event) {
+        if (click) {
+          event.target.style.backgroundColor = `${colorBtn.value}`;
+        }          
+      });
+    });
+
+    // Button for rainbow mode (random colors)
+    rainbowmodeBtn.addEventListener('click', () => { 
+      div.addEventListener('mouseover', function(event) {
+        if (click) {
+          event.target.style.backgroundColor = getRandomColor();
+        }          
+      });
+    });
+
+    // Button for eraser mode (sets color to beige)
+    eraserBtn.addEventListener('click', () => {
+      div.addEventListener('mouseover', function(event) {
+        if (click) {
+          event.target.style.backgroundColor = "beige";
+        }
+      });
+    });
+
+    grid.appendChild(div); 
+  } 
+}
+
+// Initial grid generation
+gridGeneration();
+
+// Generates a new grid when the range input value changes
+rangeGrid.addEventListener('input', gridGeneration);
+
+// Resets the grid when the reset button is clicked
 resetBtn.addEventListener('click', () => {
-    // Clear the grid
-    clearGrid()
-    grid.style.gridTemplateColumns = `repeat(${rangeGrid.value}, 1fr)`
-    grid.style.gridTemplateRows = `repeat(${rangeGrid.value}, 1fr)`
-    // Generation of a new grid
-    for (let i = 0; i < rangeGrid.value*rangeGrid.value; i++) {
-     
-        grid.style.gridTemplateColumns = `repeat(${rangeGrid.value}, 1fr)`
-        grid.style.gridTemplateRows = `repeat(${rangeGrid.value}, 1fr)`
-        const div = document.createElement('div');
-        div.classList.add('square');
-        let textRange = document.querySelector('.text-range');
-        textRange.innerText = rangeGrid.value + "X" + rangeGrid.value
-        div.style.backgroundColor = "beige";
-
-        //event to draw with a color chosen
-        div.addEventListener('mouseover', function(event){
-            if (click) {
-                event.target.style.backgroundColor = `${colorBtn.value}`;
-            }          
-        });
-
-        //button for Rainbow mode or one color mode !
-        normalmodeBtn.addEventListener('click', () => { 
-            div.addEventListener('mouseover', function(event){
-                if (click) {
-                    event.target.style.backgroundColor = `${colorBtn.value}`;
-                }          
-            });
-        });
-
-        rainbowmodeBtn.addEventListener('click', () => { 
-            div.addEventListener('mouseover', function(event){
-                if (click) {
-                    event.target.style.backgroundColor = getRandomColor();
-                }          
-            });
-        });
-
-        grid.appendChild(div); 
-    }
-})
-
-//Generate new grid with the Range input
-rangeGrid.addEventListener('input', function createGrid() {
-    // Clear the grid to be able to generate a new one with the new range Input value
-    clearGrid()
-    grid.style.gridTemplateColumns = `repeat(${rangeGrid.value}, 1fr)`
-    grid.style.gridTemplateRows = `repeat(${rangeGrid.value}, 1fr)`
-    // Generation of a new grid with the value of the range input
-    for (let i = 0; i < rangeGrid.value*rangeGrid.value; i++) {
-     
-        grid.style.gridTemplateColumns = `repeat(${rangeGrid.value}, 1fr)`
-        grid.style.gridTemplateRows = `repeat(${rangeGrid.value}, 1fr)`
-        const div = document.createElement('div');
-        div.classList.add('square');
-        let textRange = document.querySelector('.text-range');
-        textRange.innerText = rangeGrid.value + "X" + rangeGrid.value
-        //event to draw with a color chosen
-
-        div.addEventListener('mouseover', function(event){
-            if (click) {
-                event.target.style.backgroundColor = `${colorBtn.value}`;
-            }
-        });
-
-        //button for Rainbow mode or one color mode !
-        normalmodeBtn.addEventListener('click', () => { 
-
-            div.addEventListener('mouseover', function(event){
-                if (click) {
-                    event.target.style.backgroundColor = `${colorBtn.value}`;
-                }          
-            });
-        });
-
-        rainbowmodeBtn.addEventListener('click', () => { 
-            div.addEventListener('mouseover', function(event){
-                if (click) {
-                    event.target.style.backgroundColor = getRandomColor();
-                }          
-            });
-        });
-
-        grid.appendChild(div); 
-    }
-    })
+  clearGrid();
+  gridGeneration();
+});
